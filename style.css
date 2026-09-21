@@ -1,0 +1,1464 @@
+/* =========================================================
+   DESIGN SYSTEM — BASE MONOCROMÁTICA & LARANJA SÓLIDO (SEM DEGRADÊS)
+   Foco em Alta Legibilidade, Simplicidade e Usabilidade
+========================================================= */
+
+:root {
+  /* Cores Base Estruturais (Preto, Branco e Tons Neutros Limpos) */
+  --bg-app: #f8fafc;
+  --bg-subtle: #f1f5f9;
+  --surface: #ffffff;
+  --surface-hover: #f8fafc;
+  --surface-active: #e2e8f0;
+  --surface-card: #ffffff;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-subtle: #94a3b8;
+
+  /* Cor Principal: LARANJA SÓLIDO VIVO */
+  --accent-primary: #ea580c;
+  --accent-primary-hover: #c2410c;
+  --accent-primary-active: #9a3412;
+  --accent-light: #fff7ed;
+  --accent-border: #fdba74;
+  --accent-text: #9a3412;
+
+  --border-color: #e2e8f0;
+  --border-color-subtle: #f1f5f9;
+  --border-color-strong: #cbd5e1;
+
+  --today-bg: #fff7ed;
+  --today-indicator: #ea580c;
+  --today-ring: #ea580c;
+
+  --overlay-bg: rgba(15, 23, 42, 0.6);
+
+  --topbar-height: 74px;
+  --side-panel-width: 330px;
+
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.12);
+
+  --transition: 0.15s ease;
+}
+
+[data-theme="dark"] {
+  /* Cores Base Estruturais no Modo Escuro (Preto Puro & Grafite Neutro) */
+  --bg-app: #000000;
+  --bg-subtle: #0f0f12;
+  --surface: #161618;
+  --surface-hover: #1f1f23;
+  --surface-active: #27272b;
+  --surface-card: #161618;
+
+  --text-primary: #f4f4f5;
+  --text-secondary: #d4d4d8;
+  --text-muted: #a1a1aa;
+  --text-subtle: #71717a;
+
+  /* Cor Principal: LARANJA SÓLIDO */
+  --accent-primary: #f97316;
+  --accent-primary-hover: #fb923c;
+  --accent-primary-active: #ea580c;
+  --accent-light: rgba(249, 115, 22, 0.16);
+  --accent-border: rgba(249, 115, 22, 0.35);
+  --accent-text: #fdba74;
+
+  --border-color: #27272a;
+  --border-color-subtle: #18181b;
+  --border-color-strong: #3f3f46;
+
+  --today-bg: rgba(249, 115, 22, 0.14);
+  --today-indicator: #f97316;
+  --today-ring: #f97316;
+
+  --overlay-bg: rgba(0, 0, 0, 0.85);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.7);
+}
+
+/* =========================================================
+   RESET & BASE
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: "Plus Jakarta Sans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-app);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================================================
+   ESTRUTURA PRINCIPAL
+========================================================= */
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-wrapper {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+  height: var(--topbar-height);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+}
+
+/* Chip de Coordenação — Identidade Principal (Lado Esquerdo) */
+.topbar-coord-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+}
+
+.avatar-coord {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-primary);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.avatar-coord svg {
+  width: 24px;
+  height: 24px;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.topbar-coord-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.coord-label {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.coord-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.topbar-search {
+  height: 44px;
+  flex: 1;
+  max-width: 460px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  transition: var(--transition);
+}
+
+.topbar-search:focus-within {
+  border-color: var(--accent-primary);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+}
+
+.search-icon svg {
+  width: 17px;
+  height: 17px;
+  color: var(--text-muted);
+  display: block;
+}
+
+.topbar-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.topbar-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-school-tag {
+  background: var(--accent-light);
+  color: var(--accent-primary);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--accent-border);
+}
+
+.icon-btn,
+.theme-toggle-btn {
+  border: 1px solid var(--border-color);
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  height: 40px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+/* Botões com Acento Laranja (Modo Claro e Impressão) */
+.accent-btn {
+  border-color: var(--accent-border);
+  color: var(--accent-primary);
+  background: var(--accent-light);
+}
+
+.accent-btn:hover {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+}
+
+.icon-btn svg,
+.theme-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  flex: none;
+}
+
+.icon-btn:hover,
+.theme-toggle-btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-color-strong);
+}
+
+/* =========================================================
+   ÁREA DE CONTEÚDO
+========================================================= */
+
+.content-area {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--side-panel-width);
+  gap: 22px;
+  padding: 24px 28px;
+}
+
+.calendar-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =========================================================
+   BIMESTER NAVIGATION (5 BOTÕES SÓLIDOS)
+========================================================= */
+
+.bimester-bar-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bimester-bar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bimester-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bimester-nav-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bimester-btn {
+  flex: 1;
+  min-width: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 700;
+  transition: var(--transition);
+  position: relative;
+  text-align: center;
+}
+
+.bimester-btn .bim-dates {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.bimester-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* Botão Ativo: Laranja Sólido Puro (Sem degradê) */
+.bimester-btn.active {
+  background: var(--accent-primary);
+  color: #ffffff;
+  border-color: var(--accent-primary);
+}
+
+.bimester-btn.active .bim-dates {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bimester-btn.btn-current-today {
+  border-color: var(--accent-border);
+}
+
+.bimester-btn.btn-current-today.active {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.bimester-btn .live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  position: absolute;
+  top: 8px;
+  right: 9px;
+}
+
+/* =========================================================
+   BARRA DE NAVEGAÇÃO DE MÊS E ANO
+========================================================= */
+
+.calendar-navigation-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-month-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.month-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.month-nav-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5;
+}
+
+.month-nav-btn:hover {
+  background: var(--accent-light);
+  border-color: var(--accent-border);
+  color: var(--accent-text);
+}
+
+.current-period-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+}
+
+.period-title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  min-width: 160px;
+  text-align: center;
+}
+
+.period-year-badge {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: var(--radius-xs);
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.nav-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =========================================================
+   BOTÕES GERAIS
+========================================================= */
+
+.btn {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border-color-strong);
+}
+
+.btn-primary {
+  color: #ffffff;
+  border-color: var(--accent-primary);
+  background: var(--accent-primary);
+}
+
+.btn-primary:hover {
+  background: var(--accent-primary-hover);
+  border-color: var(--accent-primary-hover);
+}
+
+.btn-danger {
+  color: #dc2626;
+  border-color: rgba(220, 38, 38, 0.3);
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.btn-danger:hover {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: #dc2626;
+}
+
+.view-switcher {
+  display: flex;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.view-tab-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 7px 15px;
+  border-radius: var(--radius-xs);
+  font-weight: 700;
+  font-size: 13px;
+  transition: var(--transition);
+}
+
+.view-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.view-tab-btn.active {
+  background: var(--surface);
+  color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* =========================================================
+   CALENDÁRIO GRADE MENSAL COM QUADRADINHOS SEPARADOS
+========================================================= */
+
+.calendar-view-container {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.weekday-header-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.weekday-header-cell {
+  padding: 10px 6px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Quadrado individual do dia */
+.month-day-cell {
+  min-height: 128px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  position: relative;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.month-day-cell:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  z-index: 2;
+}
+
+.month-day-cell.outside-month {
+  background: var(--bg-subtle);
+  opacity: 0.45;
+  border-color: var(--border-color-subtle);
+}
+
+.month-day-cell.is-today {
+  background: var(--today-bg);
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.month-day-cell.today-pulse {
+  animation: todayHighlightPulse 1.8s ease-in-out;
+}
+
+@keyframes todayHighlightPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    transform: scale(1);
+  }
+}
+
+.month-day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.day-number-badge {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.is-today .day-number-badge {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.quick-add-btn {
+  display: none !important;
+}
+
+.events-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.event-chip-item {
+  border-left: 5px solid;
+  border-radius: var(--radius-xs);
+  padding: 5px 8px 5px 9px;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  transition: var(--transition);
+  background-color: var(--bg-subtle);
+}
+
+.event-chip-item:hover {
+  filter: brightness(0.96);
+  transform: translateX(2px);
+}
+
+.chip-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more-events-indicator {
+  color: var(--accent-text);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  background: var(--accent-light);
+  border: 1px solid var(--accent-border);
+  width: fit-content;
+  margin-top: 2px;
+}
+
+.more-events-indicator:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* =========================================================
+   LEGENDA DE CORES (DIRETA E LIMPA)
+========================================================= */
+
+.calendar-legend-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.calendar-legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar-legend-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.calendar-legend-items-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xs);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+  user-select: none;
+}
+
+.legend-item .legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+
+/* =========================================================
+   VISÃO ANUAL
+========================================================= */
+
+.year-view {
+  padding: 10px 0;
+}
+
+.year-view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.year-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.year-months-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.mini-month {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.mini-month:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+.mini-month-header {
+  padding: 10px;
+  background: var(--bg-subtle);
+  font-weight: 800;
+  font-size: 13px;
+  text-align: center;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mini-weekdays,
+.mini-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 6px;
+  gap: 2px;
+}
+
+.mini-weekdays span {
+  padding: 4px 1px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.mini-day {
+  min-height: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  position: relative;
+  border-radius: 5px;
+  padding: 2px 1px;
+  transition: var(--transition);
+}
+
+.mini-day-number {
+  line-height: 1;
+}
+
+.mini-day.is-today {
+  background: var(--accent-primary) !important;
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+.mini-day.is-today .mini-day-dot {
+  background-color: #ffffff !important;
+}
+
+.mini-day-dots-container {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  height: 4px;
+}
+
+.mini-day-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* =========================================================
+   PAINEL LATERAL (DIRETO E OBJETIVO)
+========================================================= */
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-card-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-card-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.panel-content {
+  padding: 16px 18px;
+}
+
+.progress-item {
+  margin-bottom: 14px;
+}
+
+.progress-item:last-child {
+  margin-bottom: 0;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.progress-top strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.progress-track {
+  height: 7px;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-primary);
+  transition: width 0.3s ease;
+}
+
+.deadline-item {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-color-subtle);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.deadline-item:last-child {
+  border-bottom: 0;
+}
+
+.deadline-item:hover {
+  background: var(--surface-hover);
+  padding-left: 22px;
+}
+
+.deadline-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.deadline-meta {
+  color: var(--accent-primary);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deadline-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--accent-light);
+  color: var(--accent-text);
+}
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px 16px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   FAB (BOTÃO FLUTUANTE — LARANJA SÓLIDO)
+========================================================= */
+
+.fab-btn {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.fab-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #ffffff;
+  stroke-width: 2.5;
+}
+
+.fab-btn:hover {
+  background: var(--accent-primary-hover);
+  transform: scale(1.06);
+}
+
+/* =========================================================
+   MODAIS & FORMULÁRIOS
+========================================================= */
+
+.modal-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal-overlay-backdrop.open {
+  display: flex;
+}
+
+.modal-card {
+  width: min(600px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-card-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+}
+
+.modal-card-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+}
+
+.modal-close-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.modal-card-body {
+  padding: 20px;
+  flex: 1;
+}
+
+.modal-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+}
+
+.form-field-group {
+  margin-bottom: 16px;
+}
+
+.form-field-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-grid-2cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.input-text,
+.input-select,
+.input-textarea {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  outline: none;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.input-text:focus,
+.input-select:focus,
+.input-textarea:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+}
+
+.input-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  cursor: pointer;
+}
+
+.swatches-palette-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.color-swatch.selected {
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 2px var(--surface);
+  transform: scale(1.15);
+}
+
+.details-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.detail-row {
+  display: flex;
+  gap: 12px;
+}
+
+.detail-icon-box {
+  width: 10px;
+  border-radius: 4px;
+  flex: none;
+}
+
+.detail-label {
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.detail-description {
+  padding: 14px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+}
+
+/* =========================================================
+   TOAST NOTIFICATION
+========================================================= */
+
+.toast-notification {
+  position: fixed;
+  right: 24px;
+  top: 85px;
+  z-index: 200;
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  background: #0f172a;
+  color: #ffffff;
+  border: 1px solid #334155;
+  box-shadow: var(--shadow-lg);
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+[data-theme="dark"] .toast-notification {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 1150px) {
+  .content-area {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .side-panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .year-months-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .calendar-navigation-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-month-center,
+  .nav-right-actions {
+    justify-content: center;
+  }
+
+  .side-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .year-months-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    height: auto;
+    min-height: 70px;
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .topbar-search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .content-area {
+    padding: 12px;
+  }
+
+  .bimester-nav-group {
+    flex-direction: column;
+  }
+
+  .bimester-btn {
+    width: 100%;
+  }
+
+  .month-grid {
+    gap: 6px;
+  }
+
+  .weekday-header-row {
+    gap: 6px;
+  }
+
+  .month-day-cell {
+    min-height: 85px;
+    padding: 6px;
+    border-radius: var(--radius-sm);
+  }
+
+  .weekday-header-cell {
+    padding: 6px 2px;
+    font-size: 10px;
+  }
+
+  .event-chip-item {
+    font-size: 10px;
+    padding: 3px 4px;
+  }
+
+  .quick-add-btn {
+    display: none;
+  }
+
+  .form-grid-2cols {
+    grid-template-columns: 1fr;
+  }
+
+  .year-months-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fab-btn {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media print {
+  .topbar,
+  .calendar-navigation-card,
+  .bimester-bar-card,
+  .calendar-legend-card,
+  .side-panel,
+  .fab-btn {
+    display: none !important;
+  }
+
+  .main-wrapper {
+    width: 100%;
+    margin: 0;
+  }
+
+  .content-area {
+    display: block;
+    padding: 0;
+  }
+
+  body {
+    background: white;
+  }
+}
