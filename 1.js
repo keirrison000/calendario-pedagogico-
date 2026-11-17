@@ -190,8 +190,41 @@ const CP = {
     getBimesterForDate(date) {
       const year = date.getFullYear();
       const bimesters = CP.config.getBimesters(year);
-      const time = date.getTime();
-      return bimesters.find(b => time >= b.start.getTime() && time <= b.end.getTime()) || null;
+      const targetISO = this.toISO(date);
+      return bimesters.find(b => {
+        const startISO = this.toISO(b.start);
+        const endISO = this.toISO(b.end);
+        return targetISO >= startISO && targetISO <= endISO;
+      }) || null;
+    },
+
+    getBimesterForMonth(year, month) {
+      switch (month) {
+        case 1: // Fevereiro
+        case 2: // Março
+        case 3: // Abril
+          return "1";
+        case 4: // Maio
+        case 5: // Junho
+          return "2";
+        case 6: // Julho
+        case 7: // Agosto
+        case 8: // Setembro
+          return "3";
+        case 9:  // Outubro
+        case 10: // Novembro
+        case 11: // Dezembro
+          return "4";
+        default:
+          return null; // Janeiro (recesso escolar)
+      }
+    },
+
+    getBimesterNumber(date) {
+      if (!date) return null;
+      const bim = this.getBimesterForDate(date);
+      if (bim) return String(bim.n);
+      return this.getBimesterForMonth(date.getFullYear(), date.getMonth());
     },
 
     formatDeadlineDate(ev) {
@@ -256,7 +289,7 @@ const CP = {
             }));
           }
         }
-      } catch (err) {}
+      } catch (err) { }
 
       return [];
     },
@@ -272,7 +305,7 @@ const CP = {
       // Salva tambem no localStorage como backup local
       try {
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(events));
-      } catch (e) {}
+      } catch (e) { }
     },
 
     generateSampleEvents() {
@@ -373,8 +406,8 @@ const CP = {
         let html = `
           <div class="weekday-header-row">
             ${CP.config.weekdaysShort
-              .map(day => `<div class="weekday-header-cell">${day}</div>`)
-              .join("")}
+            .map(day => `<div class="weekday-header-cell">${day}</div>`)
+            .join("")}
           </div>
           <div class="month-grid">
         `;
@@ -408,13 +441,12 @@ const CP = {
 
               <div class="events-stack">
                 ${visible.map(ev => this.renderEventChip(ev)).join("")}
-                ${
-                  hidden > 0
-                    ? `<div class="more-events-indicator" data-action="view-day-events" data-date="${iso}">
+                ${hidden > 0
+              ? `<div class="more-events-indicator" data-action="view-day-events" data-date="${iso}">
                         +${hidden} mais
                        </div>`
-                    : ""
-                }
+              : ""
+            }
               </div>
             </div>
           `;
@@ -480,8 +512,8 @@ const CP = {
             </div>
             <div class="mini-weekdays">
               ${CP.config.weekdaysShort
-                .map(day => `<span>${day.substring(0, 1)}</span>`)
-                .join("")}
+            .map(day => `<span>${day.substring(0, 1)}</span>`)
+            .join("")}
             </div>
             <div class="mini-days">
         `;
@@ -553,7 +585,9 @@ const CP = {
       const today = new Date();
       CP.state.refDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const currentBim = CP.utils.getBimesterForDate(today);
-      CP.state.selectedBimester = currentBim ? String(currentBim.n) : "1";
+      CP.state.selectedBimester = currentBim
+        ? String(currentBim.n)
+        : (CP.utils.getBimesterForMonth(today.getFullYear(), today.getMonth()) || "1");
       this.initTheme();
       this.initCategoriesLegend();
       this.initBimesterButtons();
@@ -573,7 +607,7 @@ const CP = {
 
     applyTheme(theme) {
       document.documentElement.setAttribute("data-theme", theme);
-      try { localStorage.setItem(CP.storage.THEME_KEY, theme); } catch(e) {}
+      try { localStorage.setItem(CP.storage.THEME_KEY, theme); } catch (e) { }
       this.updateThemeButton(theme);
     },
 
@@ -827,17 +861,12 @@ const CP = {
               if (d) CP.state.refDate = d;
             } else if (miniMonth) {
               const m = parseInt(miniMonth.dataset.month, 10);
-              CP.state.refDate.setMonth(m);
+              CP.state.refDate = new Date(CP.state.refDate.getFullYear(), m, 1);
             }
             CP.state.view = "month";
 
             // Sincroniza o bimestre com o mês clicado
-            const targetBim = CP.utils.getBimesterForDate(CP.state.refDate);
-            if (targetBim) {
-              CP.state.selectedBimester = String(targetBim.n);
-            } else {
-              CP.state.selectedBimester = "atual";
-            }
+            CP.state.selectedBimester = CP.utils.getBimesterForMonth(CP.state.refDate.getFullYear(), CP.state.refDate.getMonth()) || "";
 
             this.renderAll();
             return;
@@ -942,18 +971,22 @@ const CP = {
       if (CP.state.view === "year") {
         CP.state.refDate.setFullYear(CP.state.refDate.getFullYear() + delta);
       } else {
-        CP.state.refDate.setMonth(CP.state.refDate.getMonth() + delta);
-        const bim = CP.utils.getBimesterForDate(CP.state.refDate);
-        CP.state.selectedBimester = bim ? String(bim.n) : "atual";
+        const yr = CP.state.refDate.getFullYear();
+        const mo = CP.state.refDate.getMonth();
+        const dy = CP.state.refDate.getDate();
+        const daysInTarget = new Date(yr, mo + delta + 1, 0).getDate();
+        CP.state.refDate = new Date(yr, mo + delta, Math.min(dy, daysInTarget));
+        CP.state.selectedBimester =
+          CP.utils.getBimesterForMonth(CP.state.refDate.getFullYear(), CP.state.refDate.getMonth()) || "";
       }
       this.renderAll();
     },
 
     goToToday() {
-      CP.state.refDate = new Date();
+      const today = new Date();
+      CP.state.refDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       CP.state.view = "month";
-      const bim = CP.utils.getBimesterForDate(CP.state.refDate);
-      CP.state.selectedBimester = bim ? String(bim.n) : "atual";
+      CP.state.selectedBimester = "atual";
       this.renderAll();
       this.scrollToToday();
     },
@@ -1290,9 +1323,8 @@ const CP = {
               </div>
             </div>
 
-            ${
-              ev.location
-                ? `
+            ${ev.location
+            ? `
                   <div class="detail-row">
                     <div>
                       <div class="detail-label">Local</div>
@@ -1300,12 +1332,11 @@ const CP = {
                     </div>
                   </div>
                 `
-                : ""
-            }
+            : ""
+          }
 
-            ${
-              ev.audience
-                ? `
+            ${ev.audience
+            ? `
                   <div class="detail-row">
                     <div>
                       <div class="detail-label">Público Envolvido</div>
@@ -1313,12 +1344,11 @@ const CP = {
                     </div>
                   </div>
                 `
-                : ""
-            }
+            : ""
+          }
 
-            ${
-              ev.description
-                ? `
+            ${ev.description
+            ? `
                   <div class="detail-row">
                     <div style="flex:1;">
                       <div class="detail-label">Observações e Orientações</div>
@@ -1326,8 +1356,8 @@ const CP = {
                     </div>
                   </div>
                 `
-                : ""
-            }
+            : ""
+          }
           </div>
         `;
       }
